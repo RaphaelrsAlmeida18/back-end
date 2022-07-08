@@ -5,7 +5,9 @@ import {
     Get, 
     Param, 
     Patch, 
-    Post } from '@nestjs/common';
+    Post 
+} from '@nestjs/common';
+import { CadastroService } from './cadastro.service';
 
 
 // @Controller('cadastro') é a rota desse controller
@@ -13,6 +15,10 @@ import {
 @Controller('cadastro')
 
 export class CadastroController {
+
+    // Para usar os metodos criados no service, devemos criar um constructor para receber a instancia do service
+    // Para trabalhar com a instancia service, temos que criar uma variavel para tipar com o service
+    constructor( private service: CadastroService){}
     
     // !!! aqui são os metodos de busca de dados !!!
 
@@ -38,7 +44,7 @@ export class CadastroController {
         return body
     }
 
-    // !!! aqui será os metotodos de busca e alteração de dados !!!
+    // !!! aqui são os metotodos de busca e alteração de dados !!!
 
     // @Patch(':id') É um decoration que tem a função de buscar e atualização de dados. E pra isso tem que trabalhar com os decoration @Param e @Body.
     @Patch(':id')
@@ -46,7 +52,7 @@ export class CadastroController {
         return `O cadastro ${id} foi atualizado.`
     }
 
-    // @Delete(':id') É um decoration que tem a função de buscar e deletar um dado específico
+    // @Delete(':id') É um decoration que tem a função de buscar e deletar um dado específico, por isso tem que trabalhar com o decoration @Param
     @Delete(':id')
     delete(@Param('id') id: string){
         return `O cadastro ${id} foi deletado com sucesso.`
