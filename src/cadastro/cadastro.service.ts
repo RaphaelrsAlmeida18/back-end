@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { cadastro } from './entities/cadastro.entities';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class CadastroService {
         nome: 'Raphael',
         sobrenome: 'Almeida',
         cpf: 12345678900,
-        email: 'teste@gmail',
+        email: 'teste@gmail.com',
         telefone: 98765432100
        },
     ];
@@ -23,7 +23,13 @@ export class CadastroService {
     // id: string é o primeiro parametro, ele será usado para buscar somente o id na tabela, porém, poderia ser para buscar outras coisas.
     // o metodo find tem a função de busca .
     findOne(id: string){
-        return this.cadastros.find((cadastro: cadastro) => cadastro.id === Number(id));
+        const cadastro = this.cadastros.find((cadastro: cadastro) => cadastro.id === Number(id));
+        if(!cadastro){
+            throw new HttpException(
+                `O cadastro ${id} não foi encontrado!`, HttpStatus.NOT_FOUND,
+            );
+        }
+        return cadastro;
     }
 
     // !!! Aqui esta o metodo de criação de dados !!!

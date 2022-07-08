@@ -10,6 +10,7 @@ import {
 import { CadastroService } from './cadastro.service';
 
 
+
 // @Controller('cadastro') é a rota desse controller
 // rotas são os caminhos para as requisisções 
 @Controller('cadastro')
@@ -25,14 +26,14 @@ export class CadastroController {
     // @Get() É um decoretion que tem como função de busca
     @Get()
     findAll(){
-        return 'lista de cadastros.';
+        return this.service.findAll();
     }
     
     //@Get(': ') serve para buscas de parametros dinâmicos(específicos), no caso abaixo, o parametro é o id.
     // @param() é um decoretion que trabalha com vários parametro por rota, e para usar ele em uma aplicação, devemos criar uma varíavel, no caso abaixo, a varíacel é id
     @Get(':id')
     findOne(@Param('id') id: string){
-        return `Cadastro ${id}.`
+        return this.service.findOne(id);
     }
 
     // !!! aqui será o metodo de criação de dados !!!
@@ -41,7 +42,7 @@ export class CadastroController {
     // @Body() É um decoretion que tem como função conter os dados enviado pelo post.
     @Post()
     create(@Body() body){
-        return body
+        return this.service.creat(body)
     }
 
     // !!! aqui são os metotodos de busca e alteração de dados !!!
@@ -49,12 +50,12 @@ export class CadastroController {
     // @Patch(':id') É um decoration que tem a função de buscar e atualização de dados. E pra isso tem que trabalhar com os decoration @Param e @Body.
     @Patch(':id')
     update(@Param('id') id: string, @Body() Body ){
-        return `O cadastro ${id} foi atualizado.`
+        return this.service.update(id, Body);
     }
 
     // @Delete(':id') É um decoration que tem a função de buscar e deletar um dado específico, por isso tem que trabalhar com o decoration @Param
     @Delete(':id')
     delete(@Param('id') id: string){
-        return `O cadastro ${id} foi deletado com sucesso.`
+        return this.service.remove(id);
     }
 }
