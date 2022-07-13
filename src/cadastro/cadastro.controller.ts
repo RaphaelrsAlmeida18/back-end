@@ -7,6 +7,8 @@ import {
     Patch, 
     Post 
 } from '@nestjs/common';
+import { CreatCadastroDto } from 'src/dto/creat-cadastro.dto';
+import { UpdateCadastroDto } from 'src/dto/update-cadastro.dto';
 import { CadastroService } from './cadastro.service';
 
 
@@ -40,17 +42,19 @@ export class CadastroController {
 
     // @Post() É um decoretion de criação de dados, ele recebe os dados vindo do front-end e os direciona ao corpo(banco de dados).
     // @Body() É um decoretion que tem como função conter os dados enviado pelo post.
+    // creatCadastrodto serve para tipar os objetos do corpo de uma requisição
     @Post()
-    create(@Body() body){
-        return this.service.creat(body)
+    create(@Body() creatCadastrodto: CreatCadastroDto){
+        return this.service.creat(creatCadastrodto)
     }
 
     // !!! aqui são os metotodos de busca e alteração de dados !!!
 
     // @Patch(':id') É um decoration que tem a função de buscar e atualização de dados. E pra isso tem que trabalhar com os decoration @Param e @Body.
+    // updateCadastrodto serve para tipar os objetos do corpo de uma requisição
     @Patch(':id')
-    update(@Param('id') id: string, @Body() Body ){
-        return this.service.update(id, Body);
+    update(@Param('id') id: string, @Body() UpdateCadastroDto: UpdateCadastroDto ){
+        return this.service.update(id, UpdateCadastroDto);
     }
 
     // @Delete(':id') É um decoration que tem a função de buscar e deletar um dado específico, por isso tem que trabalhar com o decoration @Param
